@@ -1,0 +1,7 @@
+******************************
+* -      My solution       - *
+******************************
+
+To enhance the POC of the UdaConnect project, I decided to propose the following solution. 
+First, to find all people within a given distances must cause time delays because there is process of reaching all people and compare with each other record, so I decided to use REST + Kafka and in the communication between the ConnectService and PersonService gRPC. 
+Then, the other message passing on the other services (Location Service and Person Service) is just REST because there is no complex processes involved among those requests.
