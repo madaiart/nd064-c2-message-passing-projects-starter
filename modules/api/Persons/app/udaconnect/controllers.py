@@ -1,5 +1,8 @@
 from datetime import datetime
 
+from app import g
+import json
+
 from app.udaconnect.models import Connection, Location, Person
 from app.udaconnect.schemas import (
     ConnectionSchema,
@@ -15,27 +18,6 @@ from typing import Optional, List
 DATE_FORMAT = "%Y-%m-%d"
 
 api = Namespace("UdaConnect", description="Connections via geolocation.")  # noqa
-
-
-# TODO: This needs better exception handling
-
-
-@api.route("/locations")
-@api.route("/locations/<location_id>")
-@api.param("location_id", "Unique ID for a given Location", _in="query")
-class LocationResource(Resource):
-    @accepts(schema=LocationSchema)
-    @responds(schema=LocationSchema)
-    def post(self) -> Location:
-        request.get_json()
-        location: Location = LocationService.create(request.get_json())
-        return location
-
-    @responds(schema=LocationSchema)
-    def get(self, location_id) -> Location:
-        location: Location = LocationService.retrieve(location_id)
-        return location
-
 
 @api.route("/persons")
 class PersonsResource(Resource):
@@ -73,11 +55,13 @@ class ConnectionDataResource(Resource):
         )
         end_date: datetime = datetime.strptime(request.args["end_date"], DATE_FORMAT)
         distance: Optional[int] = request.args.get("distance", 5)
+        
+        find_json = f'{{"person_id":"{person_id}", "start_date":"{start_date}", "end_date":"{end_date}","meters":"{meters}"'
+        kafka_data = json.dumps(find_json).encode()
+        kafka_producer = g.kafka_producer
+        kafka_producer.send(kafka_data, g.topic_name)
 
-        results = ConnectionService.find_contacts(
-            person_id=person_id,
-            start_date=start_date,
-            end_date=end_date,
-            meters=distance,
-        )
+        # Request connection service using gRPC
+        results = ConnectionService.find_contacts()
+        
         return results

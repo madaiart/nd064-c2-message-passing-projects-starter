@@ -20,6 +20,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper 
+    command: bash -c "bin/kafka-topics.sh --create --topic connections --bootstrap-server localhost:9092"
   web:
     build: .
     ports:
