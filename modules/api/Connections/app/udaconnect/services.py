@@ -1,4 +1,4 @@
-import logging, json
+import logging, json, grpc, time
 from datetime import datetime, timedelta
 from typing import Dict, List
 
@@ -10,13 +10,16 @@ from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchem
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 
+from modules.messages import connection_pb2, connection_pb2_grpc, person_pb2, person_pb2_grpc
+from concurrent import futures
+
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
 
 TOPIC_NAME = 'conections'
 
 
-class ConnectionService:
+class ConnectionServicer(connection_pb2_grpc.ConnectionServiceServicer):
     @staticmethod
     def find_contacts() -> List[Connection]:
         
@@ -40,7 +43,12 @@ class ConnectionService:
             ).all()
 
             # Cache all users in memory for quick lookup
-            person_map: Dict[str, Person] = {person.id: person for person in PersonService.retrieve_all()}
+
+            channel = grpc.insecure_channel("localhost:5002")
+            stub = person_pb2_grpc.PersonServiceStub(channel)
+            response = stub.Get(person_pb2.Empty())
+            
+            person_map: Dict[str, Person] = {person.id: person for person in response}
 
             # Prepare arguments for queries
             data = []
@@ -87,5 +95,21 @@ class ConnectionService:
                             person=person_map[exposed_person_id], location=location,
                         )
                     )
+        result_grpc = connection_pb2.ConnectionsList()
+        result_grpc.connection.extend(result)
+        return result_grpc
 
-        return result
+# Initialize gRPC Server
+server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
+connection_pb2_grpc.add_ConnectionServiceServicer_to_server(ConnectionServicer(), server)
+
+print("grpc Server starting on port 5001...")
+server.add_insecure_port("[::]:5001")
+server.start()
+
+# Keep thread alive
+try:
+    while True: 
+        time.sleep(86400)
+except KeyboardInterrupt:
+    server.stop(0)
