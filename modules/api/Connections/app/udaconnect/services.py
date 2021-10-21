@@ -6,8 +6,6 @@ from app import db
 from kafka import KafkaConsumer
 
 from app.udaconnect.models import Connection, Location, Person
-from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchema
-from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 
 from modules.messages import connection_pb2, connection_pb2_grpc, person_pb2, person_pb2_grpc

@@ -1,17 +1,11 @@
 import logging, json, grpc, time
-from datetime import datetime, timedelta
 from typing import Dict, List
 
 from app import db
 
-from app.udaconnect.models import Connection, Location, Person
-from app.udaconnect.schemas import ConnectionSchema, LocationSchema, PersonSchema
-from geoalchemy2.functions import ST_AsText, ST_Point
-from sqlalchemy.sql import text
+from app.udaconnect.models import Person
 
-from modules.messages import connection_pb2, connection_pb2_grpc, person_pb2, person_pb2_grpc
-
-from concurrent import futures
+from modules.messages import connection_pb2, connection_pb2_grpc
 
 
 logging.basicConfig(level=logging.WARNING)
@@ -42,7 +36,7 @@ class PersonService:
 
 class ConnectionService:
     @staticmethod
-    def find_allcontacts():
+    def find_contacts():
          # Cache all users in memory for quick lookup
 
             channel = grpc.insecure_channel("localhost:5001")
