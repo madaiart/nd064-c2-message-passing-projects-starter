@@ -6,7 +6,7 @@ from app.udaconnect.schemas import (
     LocationSchema,
     PersonSchema,
 )
-from app.udaconnect.services import ConnectionService, LocationService, PersonService
+from app.udaconnect.services import LocationService
 from flask import request
 from flask_accepts import accepts, responds
 from flask_restx import Namespace, Resource

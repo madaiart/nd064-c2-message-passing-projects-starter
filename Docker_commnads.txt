@@ -1,28 +1,48 @@
-docker build -t madaicol/uda-connection-api:v1.0 .
-docker push madaicol/uda-connection-api:v1.0
-
-docker build -t madaicol/uda-frontend:v1.0 .
-docker push madaicol/uda-frontend:v1.0
-
-docker build -t madaicol/uda-grpc:v1.0 .
-docker push madaicol/uda-grpc:v1.0
-
-docker build -t madaicol/uda-kafka-consumer:v1.0 .
-docker push madaicol/uda-kafka-consumer:v1.0
-
-docker build -t madaicol/uda-location-api:v1.0 .
-docker push madaicol/uda-location-api:v1.0
-
-docker build -t madaicol/uda-person-api:v1.0 .
-docker push madaicol/uda-person-api:v1.0
-
 
 
 docker build -t madaicol/nd064-udaconnect-api-persons:v1.0 .
 docker push madaicol/nd064-udaconnect-api-persons:v1.0
 
-docker build -t madaicol/nd064-udaconnect-api-connection:v1.0 .
-docker push madaicol/nd064-udaconnect-api-connection:v1.0
+docker build -t madaicol/nd064-udaconnect-api-connections:v1.0 .
+docker push madaicol/nd064-udaconnect-api-connections:v1.0
 
 docker build -t madaicol/nd064-udaconnect-api-locations:v1.0 .
 docker push madaicol/nd064-udaconnect-api-locations:v1.0
+
+ {% comment %} TEsting docker with env varaibales commnads  {% endcomment %}
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-p 5002:5002 \
+madaicol/nd064-udaconnect-api-persons:v1.0
+
+
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-p 5003:5003 \
+madaicol/nd064-udaconnect-api-connections:v1.0
+
+
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-p 5001:5001 \
+madaicol/nd064-udaconnect-api-locations:v1.0
+
+{% comment %} Restart kubernetes servces and pods {% endcomment %}
+kubectl rollout restart deploy
+
+{% comment %} Deleting everything {% endcomment %}
+kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pvc,pv --all
+
+   

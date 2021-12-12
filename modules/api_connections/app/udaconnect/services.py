@@ -5,7 +5,6 @@ from typing import Dict, List
 from app import db
 from app.udaconnect.models import Connection, Location, Person
 from app.udaconnect.schemas import LocationSchema
-from app.config import PERSON_SERVICE_ENDPOINT
 from geoalchemy2.functions import ST_AsText, ST_Point
 from sqlalchemy.sql import text
 import requests
@@ -117,7 +116,7 @@ class PersonService:
     @staticmethod
     def retrieve_all() -> List[Person]:
         list_persons = []
-        persons = requests.get(PERSON_SERVICE_ENDPOINT + "api/persons")
+        persons = requests.get("http://udaconnect-api-persons:5002/api/persons")
         persons = persons.json()
 
         for person in persons:
