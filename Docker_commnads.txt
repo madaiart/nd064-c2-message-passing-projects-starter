@@ -15,3 +15,14 @@ docker push madaicol/uda-location-api:v1.0
 
 docker build -t madaicol/uda-person-api:v1.0 .
 docker push madaicol/uda-person-api:v1.0
+
+
+
+docker build -t madaicol/nd064-udaconnect-api-persons:v1.0 .
+docker push madaicol/nd064-udaconnect-api-persons:v1.0
+
+docker build -t madaicol/nd064-udaconnect-api-connection:v1.0 .
+docker push madaicol/nd064-udaconnect-api-connection:v1.0
+
+docker build -t madaicol/nd064-udaconnect-api-locations:v1.0 .
+docker push madaicol/nd064-udaconnect-api-locations:v1.0
