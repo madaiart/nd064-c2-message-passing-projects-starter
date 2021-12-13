@@ -45,4 +45,10 @@ kubectl rollout restart deploy
 {% comment %} Deleting everything {% endcomment %}
 kubectl delete daemonsets,replicasets,services,deployments,pods,rc,pvc,pv --all
 
+{% comment %} Replace pod {% endcomment %}
+kubectl replace --force -f ./pod.json
+
+{% comment %} GrpC generator {% endcomment %}
+python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. coordinates_event.proto
+
    
