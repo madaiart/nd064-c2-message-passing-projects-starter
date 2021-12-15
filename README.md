@@ -108,9 +108,9 @@ kafka-release-zookeeper-0   1/1     Running   0          45m10s
 kafka-release-0             1/1     Running   1          45m10s
 ```
 
-Now, you will be able to deploy the services.
+<!-- Now, you will be able to deploy the services.
 For a better understanding, check the architectural diagram
-![alt text](https://raw.githubusercontent.com/fthiagomedeiros/cloud-native-architecture-udaconnect-project/development/docs/architecture_design.png "Architectural Diagram -  Now you have set up a Kafka component.")
+![alt text](https://raw.githubusercontent.com/fthiagomedeiros/cloud-native-architecture-udaconnect-project/development/docs/architecture_design.png "Architectural Diagram -  Now you have set up a Kafka component.") -->
 
 #### Run-Microservices
 1. `$ kubectl apply -f deployment/`
@@ -123,9 +123,9 @@ Once the project is up and running, you should be able to send requests to grpc 
 `kubectl get pods` and `kubectl get services` - should both return `udaconnect-app`, `udaconnect-api`, and `postgres`
 
 These pages should also load on your web browser:
-* `http://localhost:30002/` - OpenAPI Documentation
-* `http://localhost:30002/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
-* `http://localhost:30001/api/persons` - Base path for person microservice API
+* `http://localhost:30003` - OpenAPI Documentation
+* `http://localhost:30003/api/persons/1/connection?start_date=2020-01-01&end_date=2020-12-30&distance=5`
+* `http://localhost:30002/api/persons` - Base path for person microservice API
 * `http://localhost:30000/` - Frontend ReactJS Application
 
 To send records, please execute the python file for location-event-microservice
