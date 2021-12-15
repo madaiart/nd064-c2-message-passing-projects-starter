@@ -6,7 +6,7 @@ from kafka import KafkaProducer
 import coordinates_event_pb2
 import coordinates_event_pb2_grpc
 
-kafka_url = os.environ["KAFKA_URL"]
+kafka_url = "kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092"
 kafka_topic = os.environ["KAFKA_TOPIC"]
 
 logging.info('[Kafka] connecting...', kafka_url)

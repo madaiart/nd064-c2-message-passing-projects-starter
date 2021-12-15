@@ -1,7 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 data:
-  KAFKA_URL: kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092
   KAFKA_TOPIC: test
+  KAFKA_URL: kafka-release.default.svc.cluster.local:9092
+  KAFKA_URL_0: kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092
 metadata:
-  name: config-location-event-map
+  name: configuration-map

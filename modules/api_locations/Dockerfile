@@ -1,11 +1,9 @@
-FROM python:3.7-alpine
+FROM python:3.8
 
 WORKDIR .
 
 COPY . .
 RUN pip install -r requirements.txt
 
-EXPOSE 5001
-
 COPY . .
-ENTRYPOINT ["python", "grpc_server_startup.py"]
+ENTRYPOINT ["python", "location_processor_service.py"]

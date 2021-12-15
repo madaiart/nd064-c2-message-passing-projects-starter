@@ -5,6 +5,7 @@ data:
   DB_NAME: "geoconnections"
   DB_HOST: "postgres"
   DB_PORT: "5432"
-  PERSON_SERVICE_ENDPOINT: "http://udaconnect-api-persons:5002/"
+  KAFKA_URL: kafka-release.default.svc.cluster.local:9092
+  KAFKA_TOPIC: test
 metadata:
   name: db-env

@@ -1,13 +1,14 @@
+docker build -t madaicol/nd064-udaconnect-api-connections:v1.1 .
+docker push madaicol/nd064-udaconnect-api-connections:v1.1
 
+docker build -t madaicol/udaconnect-api_locations-event:v1.0 .
+docker push madaicol/udaconnect-api_locations-event:v1.0
+
+docker build -t madaicol/nd064-udaconnect-api_locations:v1.0 .
+docker push madaicol/nd064-udaconnect-api_locations:v1.0
 
 docker build -t madaicol/nd064-udaconnect-api-persons:v1.0 .
 docker push madaicol/nd064-udaconnect-api-persons:v1.0
-
-docker build -t madaicol/nd064-udaconnect-api-connections:v1.0 .
-docker push madaicol/nd064-udaconnect-api-connections:v1.0
-
-docker build -t madaicol/nd064-udaconnect-api-locations:v1.0 .
-docker push madaicol/nd064-udaconnect-api-locations:v1.0
 
  {% comment %} TEsting docker with env varaibales commnads  {% endcomment %}
 docker run -t -i -e DB_USERNAME='ct_admin' \
