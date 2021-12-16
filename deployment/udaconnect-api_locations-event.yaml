@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     service: udaconnect-api-locations-event
-  name: location-fake-svc-api
+  name: udaconnect-api-locations-event
 spec:
   ports:
   - name: "5001"
@@ -44,7 +44,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: configuration-map
-              key: KAFKA_TOPIC_0
+              key: KAFKA_TOPIC
         - name: PYTHONUNBUFFERED
           value: '0'
       restartPolicy: Always

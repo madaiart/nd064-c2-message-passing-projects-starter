@@ -1,0 +1,10 @@
+**************************
+* gRPC documentation Message passing from phone
+**************************
+
+The request must send a request with userId, latitude and longitude.
+
+An example using gRPC is in the path scripts/gRPC_Example
+In the folder the file test_grpc.py have all logic to use grpc messages,
+and it is ready to send a request to location-even service.
+
