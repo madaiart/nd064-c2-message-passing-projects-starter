@@ -1,3 +1,5 @@
+sudo cat /etc/rancher/k3s/k3s.yaml
+
 docker build -t madaicol/nd064-udaconnect-api-connections:v1.1 .
 docker push madaicol/nd064-udaconnect-api-connections:v1.1
 
@@ -40,6 +42,43 @@ docker run -t -i -e DB_USERNAME='ct_admin' \
 -p 5001:5001 \
 madaicol/nd064-udaconnect-api-locations:v1.0
 
+{% comment %} ----------------------------------------- {% endcomment %}
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-e KAFKA_URL='kafka-release.default.svc.cluster.local:9092' \
+-e KAFKA_TOPIC='test' \
+-p 5001:5001 \
+madaicol/udaconnect-api_locations:v1.0
+
+
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-e KAFKA_URL='kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092' \
+-e KAFKA_TOPIC='test' \
+-p 5001:5001 \
+madaicol/udaconnect-api_locations:v1.0
+
+
+docker run -t -i -e DB_USERNAME='ct_admin' \
+-e DB_NAME='geoconnections' \
+-e DB_HOST='postgres' \
+-e DB_PORT='5432' \
+-e DB_PASSWORD='d293aW1zb3NlY3VyZQ==' \
+-e PERSON_SERVICE_ENDPOINT='http://udaconnect-api-persons:5002' \
+-e KAFKA_URL='kafka-release-0.kafka-release-headless.default.svc.cluster.local:9092' \
+-e KAFKA_TOPIC='test' \
+-p 5001:5001 \
+madaicol/nd064-udaconnect-api_locations-even:v1.0
+
+
 {% comment %} Restart kubernetes servces and pods {% endcomment %}
 kubectl rollout restart deploy
 
@@ -52,4 +91,5 @@ kubectl replace --force -f ./pod.json
 {% comment %} GrpC generator {% endcomment %}
 python -m grpc_tools.protoc -I./ --python_out=. --grpc_python_out=. coordinates_event.proto
 
-   
+{% comment %} Get rancher kubernetes cluster {% endcomment %}
+sudo cat /etc/rancher/k3s/k3s.yaml

@@ -1,0 +1,13 @@
+Design consideretaions
+
+General information
+---------------------
+The following project uses gRPC, Kafka, and REST message passing techniques
+
+Detailed information
+--------------------
+The following architecture has a fake service that simulates communications using the gRPC message passing technique.
+Since many smartphone devices have a native framework to use gRPC, I decided to use it to gather coordinates from nearby devices.
+In addition, all information from each device is saved on a Kafka broker, so there is a message queue to process efficiently each message
+Finally, the other interaction between services and the frontend was done using REST. As it is known the services that interact externally are recommended to use REST and OpenApi. 
+Also, it should be easier to implement another front end using the same REST services.
